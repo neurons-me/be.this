@@ -1,0 +1,38 @@
+name: Generate JSDoc Documentation
+
+on:
+  push:
+    branches:
+      - jsdocs
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Clone JSDoc Template Repository
+      run: |
+        git clone --depth=1 https://github.com/neurons-me/neurons-me.github.io.git temp-repo
+        cp -r temp-repo/src/better-docs ./better-docs
+        rm -rf temp-repo
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'  # Adjust Node.js version as needed
+
+    - name: Install dependencies
+      run: npm install  # If you have any npm dependencies
+
+    - name: Generate JSDoc
+      run: npx jsdoc -c ./src/conf/jsdocs.json
+
+    - name: Upload to GitHub Pages
+      if: success()
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs
