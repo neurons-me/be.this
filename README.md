@@ -3,7 +3,7 @@
 # BE.THIS 
 ----------
 # Introduction
-Designed to empower users in defining, managing, and utilizing data and functions effectively.
+Designed to empower users in defining and utilizing data, states and functions effectively.
 -----------
 
 
